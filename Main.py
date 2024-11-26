@@ -17,12 +17,23 @@ carDetailsFilePath = open(os.path.join(os.path.dirname(sys.argv[0]) + "/car-deta
 carData = pd.read_csv(carDetailsFilePath)
 
 car_Y = carData['Price']
-car_X = carMakerFeature(carData['Make'])
+
+car_X = getCarMakerAsFeature(carData['Make'])
 car_X.insert(0,'Year', carData['Year'])
 car_X.insert(1, 'KM', carData['Kilometer'])
-car_X.insert(3, 'Color', carColorFeatures(carData['Color']))
-carData['Fuel Tank Capacity'] = np.where(carData['Fuel Tank Capacity'].isna(), getAvgFuelCapacity(carData['Fuel Tank Capacity']), carData['Fuel Tank Capacity'])
-car_X.insert(2, 'Fuel Capacity', carData['Fuel Tank Capacity'])
+car_X.insert(2, 'Color', getCarColorAsFeature(carData['Color']))
+
+carData['Fuel Tank Capacity'] = np.where(carData['Fuel Tank Capacity'].isna(), getAvg(carData['Fuel Tank Capacity']), carData['Fuel Tank Capacity'])
+car_X.insert(3, 'Fuel Capacity', carData['Fuel Tank Capacity'])
+
+carData['Seating Capacity'] = np.where(carData['Seating Capacity'].isna(), 5, carData['Seating Capacity'])
+car_X.insert(4, 'Number of Seats', carData['Seating Capacity'])
+
+car_X.insert(5, 'Transmission Type', getTransmissionAsFeature(carData['Transmission']))
+
+carData['Engine'] = np.where(carData['Engine'].isna(), getAvg(carData['Engine']), carData['Engine'])
+car_X.insert(6, 'Engine Power in CC', carData['Engine'])
+
 print(car_X)
 
 car_X_train, car_X_test, car_Y_train, car_Y_test = train_test_split(car_X, car_Y, test_size=0.3)

@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-def carMakerFeature(makers):
+
+def getCarMakerAsFeature(makers):
     f1 = []
     carMakeList = makers
     carMakeList = list(dict.fromkeys(carMakeList))
@@ -12,7 +13,7 @@ def carMakerFeature(makers):
     f1 = pd.DataFrame(f1, columns=['MakerNumbers'])
     return f1
 
-def carColorFeatures(colors):
+def getCarColorAsFeature(colors):
     feature = []
     colorList = list(dict.fromkeys(colors))
     for color in colors:
@@ -21,10 +22,20 @@ def carColorFeatures(colors):
                 feature.append(colorList.index(num))
     return pd.DataFrame(feature, columns=['Color'])
 
-def getAvgFuelCapacity(fuelCapacities):
-    fuelList = list(fuelCapacities)
+def getTransmissionAsFeature(types):
+    feature = []
+    for type in types:
+        if type == 'Automatic':
+            feature.append(True)
+        else:
+            feature.append(False)
+    return pd.DataFrame(feature, columns=['Transmission Type'])
+
+
+def getAvg(dataFrameOfNums):
+    listOfNums = list(dataFrameOfNums)
     avg = 0
-    for num in fuelList:
+    for num in listOfNums:
         if(not np.isnan(num)):
             avg += num
-    return round(avg / len(fuelList), 2)
+    return round(avg / len(listOfNums), 2)
