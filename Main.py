@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 
 features = []
 car_X = pd.DataFrame()
-car_Y = []
+car_Y = pd.DataFrame()
 carMakeList = []
 
 carDetailsFilePath = open(os.path.join(os.path.dirname(sys.argv[0]) + "/car-details.csv"))
