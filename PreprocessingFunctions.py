@@ -1,8 +1,10 @@
 import pandas as pd
 import numpy as np
+from sklearn.impute import SimpleImputer
 
-def getCarMakerAsFeature(makers):
+def getCarMakerAsNumeric(carData):
     f1 = []
+    makers = carData['Make']
     carMakeList = makers
     carMakeList = list(dict.fromkeys(carMakeList))
     #print(len(carMakeList))
@@ -10,8 +12,8 @@ def getCarMakerAsFeature(makers):
         for num in carMakeList:
             if make == num:
                 f1.append(carMakeList.index(num))
-    f1 = pd.DataFrame(f1, columns=['MakerNumbers'])
-    return f1
+    carData['Make'] = f1
+    return carData
 
 def getCarColorAsFeature(colors):
     feature = []
@@ -20,7 +22,7 @@ def getCarColorAsFeature(colors):
         for num in colorList:
             if color == num:
                 feature.append(colorList.index(num))
-    return pd.DataFrame(feature, columns=['Color'])
+    return feature
 
 def getTransmissionAsFeature(types):
     feature = []
@@ -31,11 +33,8 @@ def getTransmissionAsFeature(types):
             feature.append(False)
     return pd.DataFrame(feature, columns=['Transmission Type'])
 
-
-def getAvg(dataFrameOfNums):
-    listOfNums = list(dataFrameOfNums)
-    avg = 0
-    for num in listOfNums:
-        if(not np.isnan(num)):
-            avg += num
-    return round(avg / len(listOfNums), 2)
+def imputeValues(carData):
+    imputer = SimpleImputer(strategy='median')
+    missingValCol = ['Fuel Tank Capacity', 'Engine', 'Seating Capacity']
+    carData[missingValCol] = imputer.fit_transform(carData[missingValCol])
+    return carData
