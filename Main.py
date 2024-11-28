@@ -62,6 +62,7 @@ print("R^2: %.2f\n" % r2_score(car_Y_test, car_y_pred_RandForest))
 plt.style.use('default')
 plt.style.use('ggplot')
 
+#This plotting from https://aegis4048.github.io/mutiple_linear_regression_and_visualization_in_python
 fig, ax = plt.subplots(figsize=(8, 4))
 
 ax.plot(car_X_test['Kilometer'], car_y_pred_RandForest, color='k', label='Regression model')
