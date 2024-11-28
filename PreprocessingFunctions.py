@@ -1,28 +1,23 @@
 import pandas as pd
 import numpy as np
 from sklearn.impute import SimpleImputer
+from sklearn import preprocessing
 
-def getCarMakerAsNumeric(carData):
-    f1 = []
-    makers = carData['Make']
-    carMakeList = makers
-    carMakeList = list(dict.fromkeys(carMakeList))
-    #print(len(carMakeList))
-    for make in makers:
-        for num in carMakeList:
-            if make == num:
-                f1.append(carMakeList.index(num))
-    carData['Make'] = f1
+#Encode the Make column as numeric so it can be processed
+#using the OrdinalEncoder from Sklearn
+def encodeMakeCol(carData):
+    coder = preprocessing.OrdinalEncoder()
+    cols = ['Make', 'Price']
+    carData['Make'] = coder.fit_transform(carData[cols])
     return carData
 
-def getCarColorAsFeature(colors):
-    feature = []
-    colorList = list(dict.fromkeys(colors))
-    for color in colors:
-        for num in colorList:
-            if color == num:
-                feature.append(colorList.index(num))
-    return feature
+#Encode the Color column as numeric so it can be processed
+#using the OrdinalEncoder from Sklearn
+def encodeColorCol(carData):
+    coder = preprocessing.OrdinalEncoder()
+    cols = ['Color','Price']
+    carData['Color'] = coder.fit_transform(carData[cols])
+    return carData
 
 def getTransmissionAsFeature(types):
     feature = []
@@ -33,6 +28,8 @@ def getTransmissionAsFeature(types):
             feature.append(False)
     return pd.DataFrame(feature, columns=['Transmission Type'])
 
+#Fill in missing values for Fuel Tank Capacity, Engine, and Seating Capacity
+#using the SimpleImputer from Sklearn
 def imputeValues(carData):
     imputer = SimpleImputer(strategy='median')
     missingValCol = ['Fuel Tank Capacity', 'Engine', 'Seating Capacity']

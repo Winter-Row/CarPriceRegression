@@ -4,13 +4,14 @@ import numpy as np
 import pandas as pd
 from PreprocessingFunctions import *
 from sklearn import linear_model
+
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 
 features = []
 car_X = pd.DataFrame()
-car_Y = ()
+car_Y = []
 
 #getting the file path for the CSV
 carDetailsFilePath = open(os.path.join(os.path.dirname(sys.argv[0]) + "/car-details.csv"))
@@ -19,12 +20,10 @@ carData = pd.read_csv(carDetailsFilePath)
 
 #Preprocessing
 carData = imputeValues(carData)
-carData = getCarMakerAsNumeric(carData)
-carData['Color'] = getCarColorAsFeature(carData['Color'])
+carData = encodeMakeCol(carData)
+carData = encodeColorCol(carData)
 carData['Transmission'] = getTransmissionAsFeature(carData['Transmission'])
-
 car_Y = carData['Price']
-
 #getting the features for the model from carData
 features = ['Year', 'Kilometer', 'Fuel Tank Capacity', 'Engine', 'Seating Capacity', 'Make', 'Color', 'Transmission']
 
