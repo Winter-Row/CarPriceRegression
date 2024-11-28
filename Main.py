@@ -34,13 +34,9 @@ print(car_X)
 
 car_X_train, car_X_test, car_Y_train, car_Y_test = train_test_split(car_X, car_Y, test_size=0.3)
 
-# regr = linear_model.LinearRegression()
-# regr.fit(car_X_train, car_Y_train)
-# car_y_pred = regr.predict(car_X_test)
-
 regr = linear_model.LinearRegression()
-model = regr.fit(car_X_train, car_Y_train)
-car_y_pred = model.predict(car_X_test)
+regr.fit(car_X_train, car_Y_train)
+car_y_pred = regr.predict(car_X_test)
 
 RandForestRegr = RandomForestRegressor()
 RandForestRegr.fit(car_X_train, car_Y_train)
