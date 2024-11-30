@@ -24,7 +24,7 @@ def plotOutlierBoxPlot(carData):
     sns.set_palette(sns.color_palette(colors))
     OrderedCols = np.concatenate([carData.columns.values])
 
-    ax = plt.subplots(3, 4, figsize=(15,7),dpi=100)
+    fig, ax = plt.subplots(3, 4, figsize=(10,10),dpi=100)
 
     for i,col in enumerate(OrderedCols):
         x = i//4
@@ -36,7 +36,9 @@ def plotOutlierBoxPlot(carData):
             sns.boxplot(data=carData, x=col, y='Price', ax=ax[x,y])
             ax[x,y].xaxis.label.set_size(15)
             ax[x,y].yaxis.label.set_size(15)
-
+    ax[2, 3].axis('off')
+    ax[2, 2].axis('off')
+    ax[2, 1].axis('off')
     plt.tight_layout()    
     plt.show()
 
@@ -46,12 +48,11 @@ def plotDescriptionGrids(carData):
     target = 'Price'
     carData['label'] = 'Normal'
     carData.loc[findOutliers,'label'] = 'Outlier'
-    print(carData) 
     # Plot
     features = ['Age', 'Kilometer', 'Fuel Tank Capacity', 'Engine', 'Seating Capacity', 'Make', 'Color', 'Transmission']
     colors = ['#0055ff','#ff7000','#23bf00']
     sns.set_palette(sns.color_palette(colors))
-    ax = plt.subplots(nrows=3 ,ncols=3, figsize=(10,10), dpi=100)
+    fig, ax = plt.subplots(nrows=3 ,ncols=3, figsize=(10,10), dpi=100)
 
     for i in range(len(features)):
         x=i//3
@@ -65,3 +66,18 @@ def plotDescriptionGrids(carData):
     ax[2, 2].axis('off')
     plt.tight_layout()
     plt.show()
+
+def plotFeatureImportance(featureImportance):
+    plt.figure(figsize=(15,5))
+    featureImportance.nlargest(30).plot(kind='barh')
+    plt.show()
+
+def plotCorrelationMap(carData):
+    target = 'Price'
+    features = features = ['Age', 'Kilometer', 'Fuel Tank Capacity', 'Engine', 'Seating Capacity', 'Make', 'Color', 'Transmission', 'Price']
+    carData = carData[features]
+    cmap = sns.diverging_palette(125, 28, s=100, l=65, sep=50, as_cmap=True)
+    fig, ax = plt.subplots(figsize=(10, 10), dpi=80)
+    ax = sns.heatmap(pd.concat([carData.drop(target,axis=1), carData[target]],axis=1).corr(), annot=True, cmap=cmap)
+    plt.show()
+
