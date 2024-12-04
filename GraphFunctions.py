@@ -16,6 +16,13 @@ def plotActualVsPredictedPrices(test, pred):
     plt.title("Actual Car Price vs. Predicted Car Price Linear Regression Test Data")
     plt.show()
 
+def plotActualVsPredictedPricesRandomForest(test, pred):
+    plt.scatter(test, pred)
+    plt.xlabel("Actual Car Price")
+    plt.ylabel("Predicted Car Price")
+    plt.title("Actual Car Price vs. Predicted Car Price Random Forest Regression Test Data")
+    plt.show()
+
 def plotOutlierBoxPlot(carData):
     features = ['Age', 'Kilometer', 'Fuel Tank Capacity', 'Engine', 'Seating Capacity', 'Make', 'Color', 'Transmission', 'Price']
     carData = carData[features]
@@ -39,7 +46,7 @@ def plotOutlierBoxPlot(carData):
     ax[2, 3].axis('off')
     ax[2, 2].axis('off')
     ax[2, 1].axis('off')
-    plt.tight_layout()    
+    plt.tight_layout()  
     plt.show()
 
 
@@ -70,6 +77,7 @@ def plotDescriptionGrids(carData):
 def plotFeatureImportance(featureImportance):
     plt.figure(figsize=(15,5))
     featureImportance.nlargest(30).plot(kind='barh')
+    plt.title('Feature Importance')
     plt.show()
 
 def plotCorrelationMap(carData):
@@ -79,5 +87,6 @@ def plotCorrelationMap(carData):
     cmap = sns.diverging_palette(125, 28, s=100, l=65, sep=50, as_cmap=True)
     fig, ax = plt.subplots(figsize=(10, 10), dpi=80)
     ax = sns.heatmap(pd.concat([carData.drop(target,axis=1), carData[target]],axis=1).corr(), annot=True, cmap=cmap)
+    plt.title("Correlation Heat Map")
     plt.show()
 

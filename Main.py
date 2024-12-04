@@ -74,7 +74,7 @@ plotCorrelationMap(carData)
 #using linear regression
 plotActualVsPredictedPrices(car_Y_test, car_y_pred)
 #using random forest regression
-plotActualVsPredictedPrices(car_Y_test, car_y_pred_RandForest)
+plotActualVsPredictedPricesRandomForest(car_Y_test, car_y_pred_RandForest)
 #plotting outliers
 plotOutlierBoxPlot(carData)
 #plotting graphs on price vs other features
