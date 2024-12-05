@@ -18,7 +18,7 @@ def encodeColorCol(carData):
     cols = ['Color','Price']
     carData['Color'] = coder.fit_transform(carData[cols])
     return carData
-
+#Takes the transmission column and turns into into numeric data
 def getTransmissionAsFeature(types):
     feature = []
     for type in types:
@@ -35,7 +35,7 @@ def imputeValues(carData):
     missingValCol = ['Fuel Tank Capacity', 'Engine', 'Seating Capacity']
     carData[missingValCol] = imputer.fit_transform(carData[missingValCol])
     return carData
-
+#Unused function due to the feature having little importance
 def getOwnerNum(carData):
     f1 = []
     for owner in carData['Owner']:
@@ -47,7 +47,7 @@ def getOwnerNum(carData):
             f1.append(0)
     carData['Owner'] = f1
     return carData
-
+#gets thee age of the car from the yer column and subtracting it for the year the data was last updated
 def getCarAge(carData):
     carData.insert(0, "Age", 2022 - carData['Year'])
     carData.drop('Year', axis=1)

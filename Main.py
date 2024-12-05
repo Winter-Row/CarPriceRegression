@@ -30,9 +30,7 @@ car_Y = carData['Price']
 #getting the features for the model from carData
 features = ['Age', 'Kilometer', 'Fuel Tank Capacity', 'Engine', 'Seating Capacity', 'Make', 'Color', 'Transmission']
 car_X = carData[features]
-
-print(car_X)
-
+#Creating the train test split
 car_X_train, car_X_test, car_Y_train, car_Y_test = train_test_split(car_X, car_Y, test_size=0.3)
 
 
@@ -45,16 +43,20 @@ feat_importances = pd.Series(model.feature_importances_, index=car_X_train.colum
 feat_importances = feat_importances.sort_values()
 plotFeatureImportance(feat_importances)
 
+#Creating the linear regression model
 regr = linear_model.LinearRegression()
 regr.fit(car_X_train, car_Y_train)
 car_y_pred = regr.predict(car_X_test)
 
+#Creating the Random Forest Regressor
 RandForestRegr = RandomForestRegressor()
 RandForestRegr.fit(car_X_train, car_Y_train)
 car_y_pred_RandForest = RandForestRegr.predict(car_X_test)
 
+#Displaying the outliers using the findOutliers Function
 print("Outliers Found: %d\n" % len(findOutliers(carData)))
 
+#Displaying the scores of Linear Regression model, Random Forest Regression Model,, and Extra Tree Classifier
 print("Linear Regression")
 print("MSE: %.2f" % mean_squared_error(car_Y_test, car_y_pred))
 print("R^2: %.2f" % r2_score(car_Y_test, car_y_pred))
@@ -70,10 +72,11 @@ print("MSE: %.2f" % mean_squared_error(car_Y_test, car_y__pred_Tree))
 print("R^2: %.2f" % r2_score(car_Y_test, car_y__pred_Tree))
 print("Max Error: %.2f\n" % max_error(car_Y_test, car_y__pred_Tree))
 
+#plotting the correlation heat ma
 plotCorrelationMap(carData)
-#using linear regression
+#Plotting using linear regression
 plotActualVsPredictedPrices(car_Y_test, car_y_pred)
-#using random forest regression
+#Plootting using random forest regression
 plotActualVsPredictedPricesRandomForest(car_Y_test, car_y_pred_RandForest)
 #plotting outliers
 plotOutlierBoxPlot(carData)

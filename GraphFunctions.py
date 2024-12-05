@@ -8,7 +8,7 @@ Graphing help from
 https://www.kaggle.com/code/farzadnekouei/polynomial-regression-regularization-assumptions/notebook
 https://www.kaggle.com/code/martejaz/04-car-price-prediction-model/notebook
 """
-
+#Function for plotting the linear regression test price score vs the actual prices 
 def plotActualVsPredictedPrices(test, pred):
     plt.scatter(test, pred)
     plt.xlabel("Actual Car Price")
@@ -16,6 +16,7 @@ def plotActualVsPredictedPrices(test, pred):
     plt.title("Actual Car Price vs. Predicted Car Price Linear Regression Test Data")
     plt.show()
 
+#Function for plotting the Random Forest test price score vs thee actual prices
 def plotActualVsPredictedPricesRandomForest(test, pred):
     plt.scatter(test, pred)
     plt.xlabel("Actual Car Price")
@@ -23,6 +24,7 @@ def plotActualVsPredictedPricesRandomForest(test, pred):
     plt.title("Actual Car Price vs. Predicted Car Price Random Forest Regression Test Data")
     plt.show()
 
+#Function for plotting the outlier in a box plot format
 def plotOutlierBoxPlot(carData):
     features = ['Age', 'Kilometer', 'Fuel Tank Capacity', 'Engine', 'Seating Capacity', 'Make', 'Color', 'Transmission', 'Price']
     carData = carData[features]
@@ -50,7 +52,7 @@ def plotOutlierBoxPlot(carData):
     plt.show()
 
 
-
+#Function that plots each feature in a scatter plot against car prices
 def plotDescriptionGrids(carData):
     target = 'Price'
     carData['label'] = 'Normal'
@@ -74,12 +76,14 @@ def plotDescriptionGrids(carData):
     plt.tight_layout()
     plt.show()
 
+#Plot the features importance using th Extra Tree classifier
 def plotFeatureImportance(featureImportance):
     plt.figure(figsize=(15,5))
     featureImportance.nlargest(30).plot(kind='barh')
     plt.title('Feature Importance')
     plt.show()
 
+#Plot the correlation Heat map
 def plotCorrelationMap(carData):
     target = 'Price'
     features = features = ['Age', 'Kilometer', 'Fuel Tank Capacity', 'Engine', 'Seating Capacity', 'Make', 'Color', 'Transmission', 'Price']
